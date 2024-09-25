@@ -1,9 +1,9 @@
 # TP-SVM
 
-TP réalisé par Guillauem Bernard-Reymond. 
+TP réalisé par Guillaume Bernard-Reymond. 
 
-Vous trouverez dans ce repository le code source du TP ainsi que le compte rendu associé : TP3-SVM.pdf 
+Vous trouverez dans ce dépôt le code source du TP ainsi que le compte rendu associé : **TP3-SVM.pdf** 
 
-Le code source se trouve dans le dossier 'Script python'.
+Le code source se trouve dans le dossier **'Script python'**.
 
-Le fichier .tex m'ayant permis de générer le pdf se trouve à la source et ne nécessite de télécharger le dossier 'images' pour fonctionner. Vous y trouverez toutes les images utilisées dans le compte rendu.
+Le fichier TP3-SVM.tex m'ayant permis de générer le pdf se trouve à la racine. Pour le compiler, il vous faudra télécharger le dossier $'images'$ dans lequel vous trouverez toutes les images utilisées dans le compte rendu.
