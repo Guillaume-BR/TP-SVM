@@ -154,7 +154,7 @@ Pour un nuage de points fixé dans des proportions 90\% - 10\%, nous nous intér
 \caption{Classification avec un noyau linéaire pour différentes valeurs de C = 1; 0.1 ; 0.01 ; 0.001 ; 0.0001 ; 0.00001 de gauche à droite et de haut en bas}
 \end{figure}
 
-On remarque l'accuracy baisse avec la valeur de $C$. Ceci est tout à fait normal car lorsque $C$ diminue, la marge augmente et le pourcentage de bien classé diminue vu qu'on autorise certains à être dans la marge. 
+On remarque l'accuracy baisse avec la valeur de $C$. Ceci est tout à fait normal car lorsque $C$ diminue, la marge augmente et le pourcentage de bien classé diminue vu qu'on autorise certains à être dans la marge. D'ailleurs pour $C<0,001$, tous les points noirs sont mal classés.
 \bigskip
 
 \begin{large}
@@ -243,16 +243,24 @@ Enfin sur la figure \ref{fig:pix_dec}, on peut apercevoir les pixels aux couleur
 
 \textbf{Question 5 : Introduction de nuisance}
 
-En introduisant du bruit suivant une loi normale centrée réduite sur notre échantillon, on se rend compte que le score diminue drastiquement :
+J'ai décidé de fixer la graine à l'intérieur de la fonction \texttt{run\_svm\_cv}. Ainsi la comparaison se fera sur des jeux de données identiques. De plus dans la partie avec bruit, la ligne de code : 
+
+\begin{lstlisting}
+X_noisy = X_noisy[np.random.permutation(X.shape[0])]
+\end{lstlisting}
+
+n'est pas valable car on modifie les images mais pas les labels. De plus dans la fonction \texttt{run\_svm\_cv}, le mélange est déjà fait. Avec $\sigma=1$ on n'observe pas de différence et j'ai donc décidé d'augmenter sigma à $5$ qui est déjà une valeur importante car nos données sont déjà centrées et réduites.
 
 \begin{lstlisting}
 run_svm_cv(X,y)
 run_svm_cv(X_noisy,y)
-\end{lstlisting} 
+\end{lstlisting}
+
+On observe donc une baisse du score. Il faudrait peut-être rajouter plus de variables de bruit pour observer une vraie baisse.
 
 \begin{itemize}
-\item[$\bullet$] Score sans variable de nuisance : 0.9211
-\item[$\bullet$] Score avec variable de nuisance : 0.5421
+\item[$\bullet$] Score sans variable de nuisance : 0.8947
+\item[$\bullet$] Score avec variable de nuisance : 0.8158
 \end{itemize} 
 
 \bigskip
@@ -263,11 +271,11 @@ En diminuant la dimension de l'espace de départ en cherchant les composantes pr
 
 \begin{table}[H]
 \begin{center}
- \begin{tabular}{|l|*{3}{>{\centering\arraybackslash}p{2cm}|}}
+ \begin{tabular}{|l|*{6}{>{\centering\arraybackslash}p{2cm}|}}
 \hline 
-Nombre de composantes & 5 & 10 & 20 \\ 
+Nombre de composantes & 5 & 10 & 20 & 50 & 100 & 380 \\ 
 \hline 
-Score & 0.5789 & 0.6421 & 0.5895 \\ 
+Score & 0.5789 & 0.6421 & 0.5895 &  0.7789 & 0.8105 & 0.8105  \\ 
 \hline 
 \end{tabular}
  \end{center} 
@@ -282,7 +290,7 @@ X_pca = pca.transform(X_noisy)
 run_svm_cv(X_pca,y)
 \end{lstlisting}
 
-On observe une amélioration de l'erreur en prenant un certains nombres de composantes principales. Toutefois si l'on en prend trop, notre score a tendance à baisser. Ceci laisse penser qu'à partir d'un certain rang $n>10$, les composantes ne représentent plus que du bruit et auront tendance si on les ajoute à faire baisser le score. Enfin cette méthode est à utiliser avec précaution du fait de temps de calculs assez longs.
+Même en prenant le plus grand nombre de composantes principales possibles, notre score est moins bon. Cela ne sert donc pas à grand chose de d'utiliser cette méthode.
 
 \end{document}
 

@@ -361,7 +361,7 @@ for C in Cs:
     err.append((1 - scores.mean())*100)
 
 plt.figure()
-plt.plot(C_values, err)
+plt.plot(Cs, err)
 plt.xscale('log')
 plt.xlabel('C')
 plt.ylabel('Erreur de classification (%)')
@@ -403,6 +403,7 @@ plt.show()
 #%%
 
 def run_svm_cv(_X, _y):
+    np.random.seed(18)
     _indices = np.random.permutation(_X.shape[0])
     _train_idx, _test_idx = _indices[:_X.shape[0] // 2], _indices[_X.shape[0] // 2:]
     _X_train, _X_test = _X[_train_idx, :], _X[_test_idx, :]
@@ -426,10 +427,9 @@ run_svm_cv(X,y)
 print("Score avec variable de nuisance")
 n_features = X.shape[1]
 # On rajoute des variables de nuisances
-sigma = 1
+sigma = 5
 noise = sigma * np.random.randn(n_samples, 300, )
 X_noisy = np.concatenate((X, noise), axis=1)
-X_noisy = X_noisy[np.random.permutation(X.shape[0])]
 run_svm_cv(X_noisy,y)
 
 
@@ -437,9 +437,9 @@ run_svm_cv(X_noisy,y)
 # Q6
 #%%
 
-n_components = 20  # jouer avec ce parametre
+n_components = 380  # jouer avec ce parametre
 print(f'Score après réduction de dimension avec {n_components} composantes principales')
-pca = PCA(n_components=n_components).fit(X_noisy)
+pca = PCA(n_components=n_components,svd_solver='randomized').fit(X_noisy)
 X_pca = pca.transform(X_noisy)
 run_svm_cv(X_pca,y)
 
