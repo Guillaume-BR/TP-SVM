@@ -131,14 +131,14 @@ On observe une classification cette fois ci bien différente :
 
 \textbf{Question 3 :}
 
-Pour un nuage de points fixé, nous nous intéressons à l'influence d'un paramètre $C$ appelé  "constante de tolérance" et qu'il s'agit d'ajuster pour avoir le pourcentage de classement correct le plus élevé : l'accuracy.
+Pour un nuage de points fixé dans des proportions 90\% - 10\%, nous nous intéressons à l'influence d'un paramètre $C$ appelé  "constante de tolérance" et qu'il s'agit d'ajuster pour avoir le pourcentage de classement correct le plus élevé : l'accuracy.
 
 \begin{table}[H]
 \begin{tabular}{|l|*{6}{>{\centering\arraybackslash}p{2cm}|}}
 \hline 
 \rule[-1ex]{0pt}{2.5ex} Valeur de $C$ & 1 & 0.1 & 0.01 & 0.001 & 0.0001 & 0.00001 \\ 
 \hline 
-\rule[-1ex]{0pt}{2.5ex} Accuracy & 69 & 69 & 65 & 73 & 69 & 56 \\ 
+\rule[-1ex]{0pt}{2.5ex} Accuracy & 96 & 96 & 96 & 92 & 90 & 90 \\ 
 \hline 
 \end{tabular}
 \caption{Evolution de l'accuracy en fonction de la valeur de $C$}
@@ -154,8 +154,7 @@ Pour un nuage de points fixé, nous nous intéressons à l'influence d'un param�
 \caption{Classification avec un noyau linéaire pour différentes valeurs de C = 1; 0.1 ; 0.01 ; 0.001 ; 0.0001 ; 0.00001 de gauche à droite et de haut en bas}
 \end{figure}
 
-Pour $C$ petit, on se rend compte que cela n'a pas d'importance si c'est mal classé. Au contraire pour $C$ grand, on va avoir une meilleure classification , car on n'autorise pas les mauvais.
-
+On remarque l'accuracy baisse avec la valeur de $C$. Ceci est tout à fait normal car lorsque $C$ diminue, la marge augmente et le pourcentage de bien classé diminue vu qu'on autorise certains à être dans la marge. 
 \bigskip
 
 \begin{large}
