@@ -125,6 +125,8 @@ On observe une classification cette fois ci bien différente :
 \label{fig:lin_vs_pol_opt}
 \end{figure}
 
+Dans notre cas, il semble que pour le noyau polynomiale optimisé, un choix linéaire ait été fait.
+
 \begin{large}
 \textbf{SVM GUI}
 \end{large}
@@ -290,7 +292,7 @@ X_pca = pca.transform(X_noisy)
 run_svm_cv(X_pca,y)
 \end{lstlisting}
 
-Même en prenant le plus grand nombre de composantes principales possibles, notre score est moins bon. Cela ne sert donc pas à grand chose de d'utiliser cette méthode.
+Même en prenant le plus grand nombre de composantes principales possibles, notre score est moins bon. Cela ne sert donc pas à grand chose de d'utiliser cette méthode dans notre étude.
 
 \end{document}
 
