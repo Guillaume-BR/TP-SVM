@@ -275,9 +275,9 @@ En diminuant la dimension de l'espace de départ en cherchant les composantes pr
 \begin{center}
  \begin{tabular}{|l|*{6}{>{\centering\arraybackslash}p{2cm}|}}
 \hline 
-Nombre de composantes & 5 & 10 & 20 & 50 & 100 & 380 \\ 
+Nombre de composantes & 5 & 40 & 50 & 100  & 380 \\ 
 \hline 
-Score & 0.5789 & 0.6421 & 0.5895 &  0.7789 & 0.8105 & 0.8105  \\ 
+Score & 0.6105 & 0.9 & 0.8947 & 0.8842 &  0.8947   \\ 
 \hline 
 \end{tabular}
  \end{center} 
@@ -285,14 +285,21 @@ Score & 0.5789 & 0.6421 & 0.5895 &  0.7789 & 0.8105 & 0.8105  \\
 \end{table}
 
 \begin{lstlisting}
-n_components = 20  # jouer avec ce parametre
-print(f'Score apres reduction de dimension avec {n_components} composantes principales')
-pca = PCA(n_components=n_components).fit(X_noisy)
-X_pca = pca.transform(X_noisy)
+n_components = 40  # jouer avec ce parametre
+print(f'Score apres reduction de dimension avec {n_components} composantes 
+principales')
+#on standardise pour pouvoir faire l'ACP
+X_noisy_scale = StandardScaler().fit_transform(X_noisy)
+pca = PCA(n_components=n_components,svd_solver='randomized')
+X_pca = pca.fit_transform(X_noisy_scale)
 run_svm_cv(X_pca,y)
 \end{lstlisting}
 
-Même en prenant le plus grand nombre de composantes principales possibles, notre score est moins bon. Cela ne sert donc pas à grand chose de d'utiliser cette méthode dans notre étude.
+On voit qu'en prenant un certain nombre de dimensions, on arrive à obtenir un meilleur score. Cela permet justement d'éliminer ce qui peut s'apparenter à du bruit qui aurait tendance à faire baisser le score.\\
+
+Etrangement, avec 40 composantes principales, le score est supérieur au score sans variable de nuisance.\\
+
+J'aurais aimé déterminer le score pour 10 et 20 composantes principales, mais le temps de calcul était trop long. 
 
 \end{document}
 
